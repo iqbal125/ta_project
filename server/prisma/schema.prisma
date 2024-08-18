@@ -7,9 +7,10 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-
-model Todo {
+model Sentiment {
   id          String    @id @default(cuid())
-  title       String
-  description String
+  text        String
+  sentiment   String
+  score       Float
+ createdAt DateTime @default(now())
 }

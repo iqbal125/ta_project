@@ -6,7 +6,7 @@ export const inputTextSchema = z.object({
       required_error: 'Input Text Required'
     })
     .min(3, {
-      message: 'Title must be at least 3 characters'
+      message: 'Input Text must be at least 3 characters'
     })
 });
 

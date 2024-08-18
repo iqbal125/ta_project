@@ -1,7 +1,7 @@
-export interface Todo {
+export interface Sentitment {
   id: string;
-  title: string;
-  description: string;
+  text: string;
+  sentiment: string;
+  score: number;
+  createdAt: Date;
 }
-
-export type TodoCreate = Omit<Todo, 'id'>;

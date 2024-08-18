@@ -4,11 +4,18 @@ import { ArrowUp } from 'react-feather';
 import axiosClient from '@/services/axios';
 import { inputTextValues, inputTextSchema } from '@/types/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
+import { errorMessageGeneral } from '@/utils/constants';
 
 const TextInput = () => {
-  const [sentiment, setSentiment] = useState(null);
+  const [sentiment, setSentiment] = useState('');
 
-  const { register, handleSubmit, watch } = useForm<inputTextValues>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm<inputTextValues>({
     resolver: zodResolver(inputTextSchema)
   });
 
@@ -16,17 +23,18 @@ const TextInput = () => {
 
   const onSubmit: SubmitHandler<inputTextValues> = async (values: inputTextValues) => {
     try {
-      const response = await axiosClient.post('https://api.example.com/sentiment-analysis', {
+      const response = await axiosClient.post('/sentiment', {
         text: values.textInput
       });
       setSentiment(response.data.sentiment);
     } catch (error) {
+      toast.error(errorMessageGeneral);
       console.error('Error analyzing sentiment:', error);
     }
   };
 
   return (
-    <div className="grid place-items-center w-full mt-12">
+    <div className="grid place-items-center w-full mt-24">
       <form onSubmit={handleSubmit(onSubmit)} className="grid place-items-center w-full mt-12">
         <div
           className={`grid grid-cols-[1fr_auto] items-center w-[740px] h-[84px] p-[20px_21px_20px_28px] border rounded-[23px] transition-all duration-300 ${
@@ -60,8 +68,10 @@ const TextInput = () => {
         </div>
       </form>
 
+      {errors.textInput && <p className="text-red-500 text-sm mt-2">{errors.textInput.message}</p>}
+
       {sentiment && (
-        <div className="mt-6 text-lg">
+        <div className="mt-12 text-lg">
           Sentiment Analysis Result: <strong>{sentiment}</strong>
         </div>
       )}
