@@ -1,7 +1,15 @@
-import React from 'react';
+import HeaderSection from '@/components/Header';
+import AdminSection from '@/components/Admin';
+import TextInput from '@/components/TextInput';
 
-const HomePage: React.FC = () => {
-  return <div className="min-h-screen flex items-center justify-center bg-gray-100">Home</div>;
-};
+function TextAnalyzerUI() {
+  return (
+    <div style={{ fontFamily: 'Arial, sans-serif' }}>
+      <AdminSection />
+      <HeaderSection />
+      <TextInput />
+    </div>
+  );
+}
 
-export default HomePage;
+export default TextAnalyzerUI;
