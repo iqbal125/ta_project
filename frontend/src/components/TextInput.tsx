@@ -21,7 +21,9 @@ const TextInput = () => {
 
   const inputValue = watch('textInput');
 
-  const onSubmit: SubmitHandler<inputTextValues> = async (values: inputTextValues) => {
+  const onSubmit: SubmitHandler<inputTextValues> = async (
+    values: inputTextValues
+  ): Promise<void> => {
     try {
       const response = await axiosClient.post('/sentiment', {
         text: values.textInput
